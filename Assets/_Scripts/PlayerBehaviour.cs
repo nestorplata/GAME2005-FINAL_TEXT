@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerBehaviour : MonoBehaviour
 {
@@ -29,8 +30,16 @@ public class PlayerBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+            StartScene();
+
+        }
         _Fire();
         _Move();
+
     }
 
     private void _Move()
@@ -98,5 +107,10 @@ public class PlayerBehaviour : MonoBehaviour
     {
         isGrounded = cube.isGrounded;
     }
+    public void StartScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex-1);
+    }
+
 
 }
