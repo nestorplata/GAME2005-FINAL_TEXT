@@ -11,16 +11,19 @@ public class CollisionManager : MonoBehaviour
 
     private static Vector3[] faces;
 
+    //public bool i;
+
     // Start is called before the first frame update
     void Start()
     {
         cubes = FindObjectsOfType<CubeBehaviour>();
-
+        //i = false;
         faces = new Vector3[]
         {
             Vector3.left, Vector3.right,
             Vector3.down, Vector3.up,
             Vector3.back , Vector3.forward
+
         };
     }
 
@@ -37,11 +40,13 @@ public class CollisionManager : MonoBehaviour
                 if (i != j)
                 {
                     CheckAABBs(cubes[i], cubes[j]);
+
                 }
             }
         }
 
-        // Check each sphere against each AABB in the scene
+
+        //Check each sphere against each AABB in the scene
         foreach (var sphere in spheres)
         {
             foreach (var cube in cubes)
@@ -50,7 +55,7 @@ public class CollisionManager : MonoBehaviour
                 {
                     CheckSphereAABB(sphere, cube);
                 }
-                
+
             }
         }
 
@@ -96,30 +101,30 @@ public class CollisionManager : MonoBehaviour
 
             s.penetration = penetration;
             s.collisionNormal = face;
-            //s.isColliding = true;
+            s.isColliding = true;
 
-            
-            Reflect(s);
+
+            //Reflect(s);
         }
 
     }
-    
-    // This helper function reflects the bullet when it hits an AABB face
-    private static void Reflect(BulletBehaviour s)
-    {
-        if ((s.collisionNormal == Vector3.forward) || (s.collisionNormal == Vector3.back))
-        {
-            s.direction = new Vector3(s.direction.x, s.direction.y, -s.direction.z);
-        }
-        else if ((s.collisionNormal == Vector3.right) || (s.collisionNormal == Vector3.left))
-        {
-            s.direction = new Vector3(-s.direction.x, s.direction.y, s.direction.z);
-        }
-        else if ((s.collisionNormal == Vector3.up) || (s.collisionNormal == Vector3.down))
-        {
-            s.direction = new Vector3(s.direction.x, -s.direction.y, s.direction.z);
-        }
-    }
+
+    //This helper function reflects the bullet when it hits an AABB face
+    //public static void Reflect(BulletBehaviour s)
+    //{
+    //    if ((s.collisionNormal == Vector3.forward) || (s.collisionNormal == Vector3.back))
+    //    {
+    //        s.direction = new Vector3(s.direction.x, s.direction.y, -s.direction.z);
+    //    }
+    //    else if ((s.collisionNormal == Vector3.right) || (s.collisionNormal == Vector3.left))
+    //    {
+    //        s.direction = new Vector3(-s.direction.x, s.direction.y, s.direction.z);
+    //    }
+    //    else if ((s.collisionNormal == Vector3.up) || (s.collisionNormal == Vector3.down))
+    //    {
+    //        s.direction = new Vector3(s.direction.x, -s.direction.y, s.direction.z);
+    //    }
+    //}
 
 
     public static void CheckAABBs(CubeBehaviour a, CubeBehaviour b)
@@ -153,7 +158,7 @@ public class CollisionManager : MonoBehaviour
                     face = faces[i];
                 }
             }
-            
+
             // set the contact properties
             contactB.face = face;
             contactB.penetration = penetration;
@@ -176,12 +181,19 @@ public class CollisionManager : MonoBehaviour
                     a.gameObject.GetComponent<RigidBody3D>().Stop();
                     a.isGrounded = true;
                 }
-                
-
+ 
                 // add the new contact
                 a.contacts.Add(contactB);
                 a.isColliding = true;
-                
+
+                //if (a.isColliding == true && a.isGrounded ==false)
+                //{
+                //    a.gameObject.GetComponent<RigidBody3D>().bodyType = BodyType.DYNAMIC;
+                //    a.gameObject.GetComponent<RigidBody3D>().direction = b.gameObject.GetComponent<PlayerBehaviour>().direction;
+
+                //}
+
+
             }
         }
         else
@@ -200,4 +212,28 @@ public class CollisionManager : MonoBehaviour
             }
         }
     }
+
+    //public static void CheckAABBs(CubeBehaviour a, BulletBehaviour b)
+    //{
+    //    if ((a.min.x <= b.max.x && a.max.x >= b.min.x) &&
+    //        (a.min.y <= b.max.y && a.max.y >= b.min.y) &&
+    //        (a.min.z <= b.max.z && a.max.z >= b.min.z))
+    //    {
+    //        if (!a.contacts.Contains(b))
+    //        {
+    //            a.contacts.Add(b);
+    //            a.isColliding = true;
+    //        }
+    //    }
+    //    else
+    //    {
+    //        if (a.contacts.Contains(b))
+    //        {
+    //            a.contacts.Remove(b);
+    //            a.isColliding = false;
+    //        }
+
+    //    }
+    //}
 }
+

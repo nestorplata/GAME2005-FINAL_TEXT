@@ -22,6 +22,8 @@ public class PlayerBehaviour : MonoBehaviour
     public CubeBehaviour cube;
     public Camera playerCam;
 
+    public Vector3 direction;
+
     void start()
     {
 
@@ -30,6 +32,7 @@ public class PlayerBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        direction += transform.position;
         if (Input.GetKeyDown(KeyCode.B))
         {
             Cursor.visible = true;
@@ -44,8 +47,8 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void _Move()
     {
-        if (isGrounded)
-        {
+        //if (isGrounded)
+        //{
             if (Input.GetAxisRaw("Horizontal") > 0.0f)
             {
                 // move right
@@ -80,7 +83,7 @@ public class PlayerBehaviour : MonoBehaviour
             }
 
             transform.position += body.velocity;
-        }
+        //}
     }
 
 

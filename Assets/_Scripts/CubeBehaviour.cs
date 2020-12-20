@@ -18,6 +18,8 @@ public class Contact : IEquatable<Contact>
         penetration = 0.0f;
     }
 
+
+
     public override bool Equals(object obj)
     {
         if (obj == null) return false;
@@ -56,6 +58,7 @@ public class CubeBehaviour : MonoBehaviour
     public Vector3 size;
     public Vector3 max;
     public Vector3 min;
+
     public bool isColliding;
     public bool debug;
     public List<Contact> contacts;
@@ -64,13 +67,15 @@ public class CubeBehaviour : MonoBehaviour
     public Bounds bounds;
     public bool isGrounded;
 
+    private PlayerBehaviour Player;
+
 
     // Start is called before the first frame update
     void Start()
     {
         debug = false;
         meshFilter = GetComponent<MeshFilter>();
-
+        
         bounds = meshFilter.mesh.bounds;
         size = bounds.size;
 
